@@ -7,6 +7,7 @@ import io.sillysillyman.todomanagementapp.service.TodoManagementService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,12 @@ public class TodoManagementController {
         Todo todo = todoManagementService.updateTodo(todoId, requestDto);
         TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
+    }
+
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long todoId,
+        @RequestBody TodoManagementRequestDto requestDto) {
+        todoManagementService.deleteTodo(todoId, requestDto.getPassword());
+        return ResponseEntity.ok().build();
     }
 }
