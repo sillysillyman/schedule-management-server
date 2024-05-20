@@ -9,12 +9,14 @@ import lombok.Setter;
 @Setter
 public class TodoManagementResponseDto {
 
+    private Long todoId;
     private String title;
     private String content;
     private String userName;
     private LocalDateTime createdAt;
 
     public TodoManagementResponseDto(Todo todo) {
+        this.todoId = todo.getTodoId();
         this.title = todo.getTitle();
         this.content = todo.getContent();
         this.userName = todo.getUserName();
