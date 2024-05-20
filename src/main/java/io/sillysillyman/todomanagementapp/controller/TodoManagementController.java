@@ -1,6 +1,8 @@
 package io.sillysillyman.todomanagementapp.controller;
 
 import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
+import io.sillysillyman.todomanagementapp.dto.TodoManagementResponseDto;
+import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.service.TodoManagementService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,10 @@ public class TodoManagementController {
     public final TodoManagementService todoManagementService;
 
     @PostMapping("/v1.0/todo")
-    public ResponseEntity postTodo(@RequestBody TodoManagementRequestDto dto) {
-        todoManagementService.createTodo(dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TodoManagementResponseDto> postTodo(
+        @RequestBody TodoManagementRequestDto dto) {
+        Todo todo = todoManagementService.createTodo(dto);
+        TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
+        return ResponseEntity.ok().body(responseDto);
     }
 }
