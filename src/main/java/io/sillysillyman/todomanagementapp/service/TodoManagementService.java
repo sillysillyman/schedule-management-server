@@ -28,17 +28,26 @@ public class TodoManagementService {
         return todoManagementRepository.findAll(Sort.by("createdAt").descending());
     }
 
-    public Todo updateTodo(Long todoId, TodoManagementRequestDto requestDto) {
+    private Todo validatePasswordAndGetTodo(Long todoId, String password) {
         Todo todo = getTodo(todoId);
 
-        if (todo.getPassword() != null && !Objects.equals(todo.getPassword(),
-            requestDto.getPassword())) {
+        if (todo.getPassword() != null && !Objects.equals(todo.getPassword(), password)) {
             throw new IllegalArgumentException();
         }
+        return todo;
+    }
+
+    public Todo updateTodo(Long todoId, TodoManagementRequestDto requestDto) {
+        Todo todo = validatePasswordAndGetTodo(todoId, requestDto.getPassword());
 
         todo.setTitle(requestDto.getTitle());
         todo.setContent(requestDto.getContent());
         todo.setUserName(requestDto.getUserName());
         return todoManagementRepository.save(todo);
+    }
+
+    public void deleteTodo(Long todoId, String password) {
+        Todo todo = validatePasswordAndGetTodo(todoId, password);
+        todoManagementRepository.delete(todo);
     }
 }
