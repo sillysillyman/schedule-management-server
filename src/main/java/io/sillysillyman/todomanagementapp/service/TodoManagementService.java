@@ -5,6 +5,7 @@ import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.repository.TodoManagementRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,6 @@ public class TodoManagementService {
     }
 
     public List<Todo> getTodos() {
-        return todoManagementRepository.findAll();
+        return todoManagementRepository.findAll(Sort.by("createdAt").descending());
     }
 }
