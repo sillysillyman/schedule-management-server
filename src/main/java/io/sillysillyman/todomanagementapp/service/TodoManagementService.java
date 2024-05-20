@@ -3,6 +3,7 @@ package io.sillysillyman.todomanagementapp.service;
 import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
 import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.repository.TodoManagementRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,9 @@ public class TodoManagementService {
 
     public Todo getTodo(Long todoId) {
         return todoManagementRepository.findById(todoId).orElseThrow(IllegalArgumentException::new);
+    }
+
+    public List<Todo> getTodos() {
+        return todoManagementRepository.findAll();
     }
 }
