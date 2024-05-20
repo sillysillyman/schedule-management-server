@@ -13,7 +13,7 @@ public class TodoManagementService {
     private final TodoManagementRepository todoManagementRepository;
 
     public Todo createTodo(TodoManagementRequestDto dto) {
-        Todo newTodo = dto.toEntity();
-        return todoManagementRepository.save(newTodo);
+        Todo todo = dto.toEntity();
+        return todoManagementRepository.save(todo);
     }
 }
