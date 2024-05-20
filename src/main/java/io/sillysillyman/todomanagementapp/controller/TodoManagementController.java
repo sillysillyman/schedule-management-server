@@ -4,6 +4,7 @@ import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
 import io.sillysillyman.todomanagementapp.dto.TodoManagementResponseDto;
 import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.service.TodoManagementService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,13 @@ public class TodoManagementController {
         Todo todo = todoManagementService.getTodo(todoId);
         TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TodoManagementResponseDto>> getTodos() {
+        List<Todo> todos = todoManagementService.getTodos();
+        List<TodoManagementResponseDto> responseDtos = todos.stream()
+            .map(TodoManagementResponseDto::new).toList();
+        return ResponseEntity.ok().body(responseDtos);
     }
 }
