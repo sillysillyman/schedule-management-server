@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -19,8 +20,11 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "todo_id", nullable = false)
     private Long todoId;
+    @Setter
     private String title;
+    @Setter
     private String content;
+    @Setter
     private String userName;
     private String password;
     private LocalDateTime createdAt;
