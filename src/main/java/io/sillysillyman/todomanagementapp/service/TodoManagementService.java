@@ -16,4 +16,8 @@ public class TodoManagementService {
         Todo todo = dto.toEntity();
         return todoManagementRepository.save(todo);
     }
+
+    public Todo getTodo(Long todoId) {
+        return todoManagementRepository.findById(todoId).orElseThrow(IllegalArgumentException::new);
+    }
 }
