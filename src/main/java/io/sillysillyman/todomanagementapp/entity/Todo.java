@@ -19,15 +19,10 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "todo_id", nullable = false)
     private Long todoId;
-
     private String title;
-
     private String content;
-
     private String userName;
-
     private String password;
-
     private LocalDateTime createdAt;
 
     @Builder
