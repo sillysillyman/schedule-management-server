@@ -2,6 +2,8 @@ package io.sillysillyman.todomanagementapp.service;
 
 import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
 import io.sillysillyman.todomanagementapp.entity.Todo;
+import io.sillysillyman.todomanagementapp.exception.PasswordMismatchException;
+import io.sillysillyman.todomanagementapp.exception.TodoNotFoundException;
 import io.sillysillyman.todomanagementapp.repository.TodoManagementRepository;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +23,8 @@ public class TodoManagementService {
     }
 
     public Todo getTodo(Long todoId) {
-        return todoManagementRepository.findById(todoId).orElseThrow(IllegalArgumentException::new);
+        return todoManagementRepository.findById(todoId)
+            .orElseThrow(() -> new TodoNotFoundException("Todo not found with id " + todoId));
     }
 
     public List<Todo> getTodos() {
@@ -32,8 +35,9 @@ public class TodoManagementService {
         Todo todo = getTodo(todoId);
 
         if (todo.getPassword() != null && !Objects.equals(todo.getPassword(), password)) {
-            throw new IllegalArgumentException();
+            throw new PasswordMismatchException("Password mismatch for todo with id " + todoId);
         }
+
         return todo;
     }
 
