@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/v1.0/todo")
 @RestController
 @AllArgsConstructor
 public class TodoManagementController {
 
     public final TodoManagementService todoManagementService;
 
-    @PostMapping("/v1.0/todo")
+    @PostMapping
     public ResponseEntity<TodoManagementResponseDto> postTodo(
         @RequestBody TodoManagementRequestDto dto) {
         Todo todo = todoManagementService.createTodo(dto);
@@ -26,7 +28,7 @@ public class TodoManagementController {
         return ResponseEntity.ok().body(responseDto);
     }
 
-    @GetMapping("/v1.0/todo/{todoId}")
+    @GetMapping("/{todoId}")
     public ResponseEntity<TodoManagementResponseDto> getTodo(@PathVariable Long todoId) {
         Todo todo = todoManagementService.getTodo(todoId);
         TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
