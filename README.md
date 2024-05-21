@@ -16,7 +16,7 @@ io.sillysillyman.todomanagementapp
 │   └── TodoManagementRepository.java
 ├── service
 │   └── TodoManagementService.java
-└── config
+├── config
 │   └── SwaggerConfig.java
 └── TodoManagementApplication.java
 ```
