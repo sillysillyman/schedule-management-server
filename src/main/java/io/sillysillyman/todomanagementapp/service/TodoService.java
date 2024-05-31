@@ -17,28 +17,18 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    public Todo createTodo(TodoRequestDto dto) {
-        Todo todo = dto.toEntity();
+    public Todo createTodo(TodoRequestDto requestDto) {
+        Todo todo = requestDto.toEntity();
         return todoRepository.save(todo);
     }
 
-    public Todo getTodo(Long todoId) {
+    public Todo readTodo(Long todoId) {
         return todoRepository.findById(todoId)
             .orElseThrow(() -> new TodoNotFoundException("Todo not found with id " + todoId));
     }
 
-    public List<Todo> getTodos() {
+    public List<Todo> readTodos() {
         return todoRepository.findAll(Sort.by("createdAt").descending());
-    }
-
-    private Todo validatePasswordAndGetTodo(Long todoId, String password) {
-        Todo todo = getTodo(todoId);
-
-        if (todo.getPassword() != null && !Objects.equals(todo.getPassword(), password)) {
-            throw new PasswordMismatchException("Password mismatch for todo with id " + todoId);
-        }
-
-        return todo;
     }
 
     public Todo updateTodo(Long todoId, TodoRequestDto requestDto) {
@@ -53,5 +43,15 @@ public class TodoService {
     public void deleteTodo(Long todoId, String password) {
         Todo todo = validatePasswordAndGetTodo(todoId, password);
         todoRepository.delete(todo);
+    }
+
+    private Todo validatePasswordAndGetTodo(Long todoId, String password) {
+        Todo todo = readTodo(todoId);
+
+        if (todo.getPassword() != null && !Objects.equals(todo.getPassword(), password)) {
+            throw new PasswordMismatchException("Password mismatch for todo with id " + todoId);
+        }
+
+        return todo;
     }
 }
