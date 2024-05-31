@@ -1,7 +1,9 @@
 package io.sillysillyman.todomanagementapp.dto;
 
 import io.sillysillyman.todomanagementapp.entity.Todo;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,13 +11,15 @@ import lombok.Setter;
 @Setter
 public class TodoManagementRequestDto {
 
-    @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "title은 필수 값입니다.")
+    @Size(max = 200, message = "title은 최대 200자 이내로 입력해주세요.")
     private String title;
-    @NotBlank(message = "Content is mandatory")
+    @NotBlank(message = "Content는 필수 값입니다.")
     private String content;
-    @NotBlank(message = "UserName is mandatory")
+    @NotBlank(message = "userName은 필수 값입니다.")
+    @Email(message = "userName은 유효한 이메일 형식이어야 합니다.")
     private String userName;
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "password는 필수 값입니다.")
     private String password;
 
     public Todo toEntity() {
