@@ -1,10 +1,10 @@
 package io.sillysillyman.todomanagementapp.service;
 
-import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
+import io.sillysillyman.todomanagementapp.dto.TodoRequestDto;
 import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.exception.PasswordMismatchException;
 import io.sillysillyman.todomanagementapp.exception.TodoNotFoundException;
-import io.sillysillyman.todomanagementapp.repository.TodoManagementRepository;
+import io.sillysillyman.todomanagementapp.repository.TodoRepository;
 import java.util.List;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -13,22 +13,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class TodoManagementService {
+public class TodoService {
 
-    private final TodoManagementRepository todoManagementRepository;
+    private final TodoRepository todoRepository;
 
-    public Todo createTodo(TodoManagementRequestDto dto) {
+    public Todo createTodo(TodoRequestDto dto) {
         Todo todo = dto.toEntity();
-        return todoManagementRepository.save(todo);
+        return todoRepository.save(todo);
     }
 
     public Todo getTodo(Long todoId) {
-        return todoManagementRepository.findById(todoId)
+        return todoRepository.findById(todoId)
             .orElseThrow(() -> new TodoNotFoundException("Todo not found with id " + todoId));
     }
 
     public List<Todo> getTodos() {
-        return todoManagementRepository.findAll(Sort.by("createdAt").descending());
+        return todoRepository.findAll(Sort.by("createdAt").descending());
     }
 
     private Todo validatePasswordAndGetTodo(Long todoId, String password) {
@@ -41,17 +41,17 @@ public class TodoManagementService {
         return todo;
     }
 
-    public Todo updateTodo(Long todoId, TodoManagementRequestDto requestDto) {
+    public Todo updateTodo(Long todoId, TodoRequestDto requestDto) {
         Todo todo = validatePasswordAndGetTodo(todoId, requestDto.getPassword());
 
         todo.setTitle(requestDto.getTitle());
         todo.setContent(requestDto.getContent());
-        todo.setUserName(requestDto.getUserName());
-        return todoManagementRepository.save(todo);
+        todo.setUserId(requestDto.getUserId());
+        return todoRepository.save(todo);
     }
 
     public void deleteTodo(Long todoId, String password) {
         Todo todo = validatePasswordAndGetTodo(todoId, password);
-        todoManagementRepository.delete(todo);
+        todoRepository.delete(todo);
     }
 }

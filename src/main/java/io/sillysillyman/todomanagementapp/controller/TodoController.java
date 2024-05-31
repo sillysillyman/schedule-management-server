@@ -1,9 +1,9 @@
 package io.sillysillyman.todomanagementapp.controller;
 
-import io.sillysillyman.todomanagementapp.dto.TodoManagementRequestDto;
-import io.sillysillyman.todomanagementapp.dto.TodoManagementResponseDto;
+import io.sillysillyman.todomanagementapp.dto.TodoRequestDto;
+import io.sillysillyman.todomanagementapp.dto.TodoResponseDto;
 import io.sillysillyman.todomanagementapp.entity.Todo;
-import io.sillysillyman.todomanagementapp.service.TodoManagementService;
+import io.sillysillyman.todomanagementapp.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -21,49 +21,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1.0/todo")
 @RestController
 @AllArgsConstructor
-public class TodoManagementController {
+public class TodoController {
 
-    public final TodoManagementService todoManagementService;
+    public final TodoService todoManagementService;
 
     @Operation(summary = "Create a new todo")
     @PostMapping
-    public ResponseEntity<TodoManagementResponseDto> postTodo(
-        @Valid @RequestBody TodoManagementRequestDto dto) {
+    public ResponseEntity<TodoResponseDto> postTodo(
+        @Valid @RequestBody TodoRequestDto dto) {
         Todo todo = todoManagementService.createTodo(dto);
-        TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
+        TodoResponseDto responseDto = new TodoResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
     }
 
     @Operation(summary = "Get a todo by ID")
     @GetMapping("/{todoId}")
-    public ResponseEntity<TodoManagementResponseDto> getTodo(@PathVariable Long todoId) {
+    public ResponseEntity<TodoResponseDto> getTodo(@PathVariable Long todoId) {
         Todo todo = todoManagementService.getTodo(todoId);
-        TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
+        TodoResponseDto responseDto = new TodoResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
     }
 
     @Operation(summary = "Get all todos")
     @GetMapping
-    public ResponseEntity<List<TodoManagementResponseDto>> getTodos() {
+    public ResponseEntity<List<TodoResponseDto>> getTodos() {
         List<Todo> todos = todoManagementService.getTodos();
-        List<TodoManagementResponseDto> responseDtos = todos.stream()
-            .map(TodoManagementResponseDto::new).toList();
+        List<TodoResponseDto> responseDtos = todos.stream()
+            .map(TodoResponseDto::new).toList();
         return ResponseEntity.ok().body(responseDtos);
     }
 
     @Operation(summary = "Update a todo by ID")
     @PutMapping("/{todoId}")
-    public ResponseEntity<TodoManagementResponseDto> putTodo(@PathVariable Long todoId,
-        @Valid @RequestBody TodoManagementRequestDto requestDto) {
+    public ResponseEntity<TodoResponseDto> putTodo(@PathVariable Long todoId,
+        @Valid @RequestBody TodoRequestDto requestDto) {
         Todo todo = todoManagementService.updateTodo(todoId, requestDto);
-        TodoManagementResponseDto responseDto = new TodoManagementResponseDto(todo);
+        TodoResponseDto responseDto = new TodoResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
     }
 
     @Operation(summary = "Delete a todo by ID")
     @DeleteMapping("/{todoId}")
     public ResponseEntity<Void> deleteTodo(@PathVariable Long todoId,
-        @Valid @RequestBody TodoManagementRequestDto requestDto) {
+        @Valid @RequestBody TodoRequestDto requestDto) {
         todoManagementService.deleteTodo(todoId, requestDto.getPassword());
         return ResponseEntity.ok().build();
     }

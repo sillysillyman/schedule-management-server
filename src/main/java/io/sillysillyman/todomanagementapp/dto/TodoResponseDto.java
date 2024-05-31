@@ -7,19 +7,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TodoManagementResponseDto {
+public class TodoResponseDto {
 
     private Long todoId;
     private String title;
     private String content;
-    private String userName;
+    private String userId;
     private LocalDateTime createdAt;
 
-    public TodoManagementResponseDto(Todo todo) {
+    public TodoResponseDto(Todo todo) {
         this.todoId = todo.getTodoId();
         this.title = todo.getTitle();
         this.content = todo.getContent();
-        this.userName = todo.getUserName();
+        this.userId = todo.getUserId();
         this.createdAt = todo.getCreatedAt();
     }
 }
