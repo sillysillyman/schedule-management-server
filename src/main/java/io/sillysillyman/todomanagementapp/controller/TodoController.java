@@ -28,8 +28,8 @@ public class TodoController {
     @Operation(summary = "Create a new todo")
     @PostMapping
     public ResponseEntity<TodoResponseDto> postTodo(
-        @Valid @RequestBody TodoRequestDto dto) {
-        Todo todo = todoManagementService.createTodo(dto);
+        @Valid @RequestBody TodoRequestDto requestDto) {
+        Todo todo = todoManagementService.createTodo(requestDto);
         TodoResponseDto responseDto = new TodoResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
     }
@@ -37,7 +37,7 @@ public class TodoController {
     @Operation(summary = "Get a todo by ID")
     @GetMapping("/{todoId}")
     public ResponseEntity<TodoResponseDto> getTodo(@PathVariable Long todoId) {
-        Todo todo = todoManagementService.getTodo(todoId);
+        Todo todo = todoManagementService.readTodo(todoId);
         TodoResponseDto responseDto = new TodoResponseDto(todo);
         return ResponseEntity.ok().body(responseDto);
     }
@@ -45,7 +45,7 @@ public class TodoController {
     @Operation(summary = "Get all todos")
     @GetMapping
     public ResponseEntity<List<TodoResponseDto>> getTodos() {
-        List<Todo> todos = todoManagementService.getTodos();
+        List<Todo> todos = todoManagementService.readTodos();
         List<TodoResponseDto> responseDtos = todos.stream()
             .map(TodoResponseDto::new).toList();
         return ResponseEntity.ok().body(responseDtos);
