@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class CommentRequestDto {
+public class CommentRequest {
 
     @NotBlank(message = "댓글 내용은 필수 값입니다.")
     @Size(max = 1000, message = "댓글 내용은 최대 1000자 이내로 입력해주세요.")

@@ -42,8 +42,7 @@ public class Todo {
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
-
-
+    
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

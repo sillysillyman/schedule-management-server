@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommentResponseDto {
+public class CommentResponse {
 
     private Long id;
     private String content;
@@ -17,7 +17,7 @@ public class CommentResponseDto {
     private Long todoId;
     private LocalDateTime createdAt;
 
-    public CommentResponseDto(Comment comment) {
+    public CommentResponse(Comment comment) {
         this.id = comment.getCommentId();
         this.content = comment.getContent();
         this.userId = comment.getUserId();

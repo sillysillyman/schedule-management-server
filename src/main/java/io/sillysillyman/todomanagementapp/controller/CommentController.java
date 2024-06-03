@@ -1,7 +1,7 @@
 package io.sillysillyman.todomanagementapp.controller;
 
-import io.sillysillyman.todomanagementapp.dto.CommentRequestDto;
-import io.sillysillyman.todomanagementapp.dto.CommentResponseDto;
+import io.sillysillyman.todomanagementapp.dto.CommentRequest;
+import io.sillysillyman.todomanagementapp.dto.CommentResponse;
 import io.sillysillyman.todomanagementapp.entity.Comment;
 import io.sillysillyman.todomanagementapp.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,38 +28,38 @@ public class CommentController {
 
     @Operation(summary = "Post a new comment")
     @PostMapping
-    public ResponseEntity<Comment> postComment(@PathVariable Long todoId,
-        @Valid @RequestBody CommentRequestDto requestDto) {
-        Comment comment = commentService.createComment(todoId, requestDto);
-        CommentResponseDto responseDto = new CommentResponseDto(comment);
-        return ResponseEntity.ok().body(comment);
+    public ResponseEntity<CommentResponse> postComment(@PathVariable Long todoId,
+        @Valid @RequestBody CommentRequest request) {
+        Comment comment = commentService.createComment(todoId, request);
+        CommentResponse response = new CommentResponse(comment);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Get a comment by Id")
     @GetMapping("/{commentId}")
-    public ResponseEntity<CommentResponseDto> getComment(@PathVariable Long commentId) {
+    public ResponseEntity<CommentResponse> getComment(@PathVariable Long commentId) {
         Comment comment = commentService.readComment(commentId);
-        CommentResponseDto responseDto = new CommentResponseDto(comment);
-        return ResponseEntity.ok().body(responseDto);
+        CommentResponse response = new CommentResponse(comment);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Get all comments for a specific todo")
     @GetMapping
-    public ResponseEntity<List<CommentResponseDto>> getCommentsByTodoId(@PathVariable Long todoId) {
+    public ResponseEntity<List<CommentResponse>> getCommentsByTodoId(@PathVariable Long todoId) {
         List<Comment> comments = commentService.readCommentsByTodoId(todoId);
-        List<CommentResponseDto> responseDtos = comments.stream()
-            .map(CommentResponseDto::new)
+        List<CommentResponse> responses = comments.stream()
+            .map(CommentResponse::new)
             .collect(Collectors.toList());
-        return ResponseEntity.ok().body(responseDtos);
+        return ResponseEntity.ok().body(responses);
     }
 
     @Operation(summary = "Update a comment by ID")
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommentResponseDto> putComment(@PathVariable Long commentId,
-        @Valid @RequestBody CommentRequestDto requestDto) {
-        Comment comment = commentService.updateComment(commentId, requestDto);
-        CommentResponseDto responseDto = new CommentResponseDto(comment);
-        return ResponseEntity.ok().body(responseDto);
+    public ResponseEntity<CommentResponse> putComment(@PathVariable Long commentId,
+        @Valid @RequestBody CommentRequest request) {
+        Comment comment = commentService.updateComment(commentId, request);
+        CommentResponse response = new CommentResponse(comment);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Delete a comment by ID")

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class TodoRequestDto {
+public class TodoRequest {
 
     @NotBlank(message = "제목은 필수 값입니다.")
     @Size(max = 200, message = "제목은 최대 200자 이내로 입력해주세요.")

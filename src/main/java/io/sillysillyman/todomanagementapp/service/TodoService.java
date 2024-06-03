@@ -1,6 +1,6 @@
 package io.sillysillyman.todomanagementapp.service;
 
-import io.sillysillyman.todomanagementapp.dto.TodoRequestDto;
+import io.sillysillyman.todomanagementapp.dto.TodoRequest;
 import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.exception.PasswordMismatchException;
 import io.sillysillyman.todomanagementapp.exception.TodoNotFoundException;
@@ -17,8 +17,8 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    public Todo createTodo(TodoRequestDto requestDto) {
-        Todo todo = requestDto.toEntity();
+    public Todo createTodo(TodoRequest request) {
+        Todo todo = request.toEntity();
         return todoRepository.save(todo);
     }
 
@@ -31,12 +31,12 @@ public class TodoService {
         return todoRepository.findAll(Sort.by("createdAt").descending());
     }
 
-    public Todo updateTodo(Long todoId, TodoRequestDto requestDto) {
-        Todo todo = validatePasswordAndGetTodo(todoId, requestDto.getPassword());
+    public Todo updateTodo(Long todoId, TodoRequest request) {
+        Todo todo = validatePasswordAndGetTodo(todoId, request.getPassword());
 
-        todo.setTitle(requestDto.getTitle());
-        todo.setContent(requestDto.getContent());
-        todo.setUserId(requestDto.getUserId());
+        todo.setTitle(request.getTitle());
+        todo.setContent(request.getContent());
+        todo.setUserId(request.getUserId());
         return todoRepository.save(todo);
     }
 

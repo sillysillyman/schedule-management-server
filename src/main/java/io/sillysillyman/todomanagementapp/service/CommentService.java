@@ -1,6 +1,6 @@
 package io.sillysillyman.todomanagementapp.service;
 
-import io.sillysillyman.todomanagementapp.dto.CommentRequestDto;
+import io.sillysillyman.todomanagementapp.dto.CommentRequest;
 import io.sillysillyman.todomanagementapp.entity.Comment;
 import io.sillysillyman.todomanagementapp.entity.Todo;
 import io.sillysillyman.todomanagementapp.exception.CommentNotFoundException;
@@ -20,10 +20,10 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Comment createComment(Long todoId, CommentRequestDto requestDto) {
+    public Comment createComment(Long todoId, CommentRequest request) {
         Todo todo = todoRepository.findById(todoId)
             .orElseThrow(() -> new TodoNotFoundException("해당 일정을 찾을 수 없습니다."));
-        Comment comment = requestDto.toEntity(todo);
+        Comment comment = request.toEntity(todo);
         return commentRepository.save(comment);
     }
 
@@ -41,10 +41,10 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment updateComment(Long commentId, CommentRequestDto requestDto) {
+    public Comment updateComment(Long commentId, CommentRequest request) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(() -> new CommentNotFoundException("해당 댓글을 찾을 수 없습니다."));
-        comment.setContent(requestDto.getContent());
+        comment.setContent(request.getContent());
         return commentRepository.save(comment);
     }
 
