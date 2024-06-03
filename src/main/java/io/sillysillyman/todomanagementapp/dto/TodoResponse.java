@@ -12,14 +12,14 @@ public class TodoResponse {
     private Long todoId;
     private String title;
     private String content;
-    private String userId;
+    private String userName;
     private LocalDateTime createdAt;
 
     public TodoResponse(Todo todo) {
         this.todoId = todo.getTodoId();
         this.title = todo.getTitle();
         this.content = todo.getContent();
-        this.userId = todo.getUserId();
+        this.userName = todo.getUserName();
         this.createdAt = todo.getCreatedAt();
     }
 }

@@ -28,7 +28,7 @@ public class Comment {
     private String content;
 
     @Column(nullable = false)
-    private String userId;
+    private String userName;
 
     @ManyToOne
     @JoinColumn(name = "todo_id", nullable = false)
@@ -38,9 +38,9 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @Builder
-    public Comment(String content, String userId, Todo todo) {
+    public Comment(String content, String userName, Todo todo) {
         this.content = content;
-        this.userId = userId;
+        this.userName = userName;
         this.todo = todo;
         this.createdAt = LocalDateTime.now();
     }

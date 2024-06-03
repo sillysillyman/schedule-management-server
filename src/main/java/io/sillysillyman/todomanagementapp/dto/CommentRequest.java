@@ -14,13 +14,13 @@ public class CommentRequest {
     @Size(max = 1000, message = "댓글 내용은 최대 1000자 이내로 입력해주세요.")
     private String content;
 
-    @NotBlank(message = "사용자 아이디는 필수 값입니다.")
-    private String userId;
+    @NotBlank(message = "사용자 이름은 필수 값입니다.")
+    private String userName;
 
     public Comment toEntity(Todo todo) {
         return Comment.builder()
             .content(this.content)
-            .userId(this.userId)
+            .userName(this.userName)
             .todo(todo)
             .build();
     }

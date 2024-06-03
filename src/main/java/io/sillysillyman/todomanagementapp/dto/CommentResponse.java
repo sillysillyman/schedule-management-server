@@ -11,16 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommentResponse {
 
-    private Long id;
+    private Long commentId;
     private String content;
-    private String userId;
+    private String userName;
     private Long todoId;
     private LocalDateTime createdAt;
 
     public CommentResponse(Comment comment) {
-        this.id = comment.getCommentId();
+        this.commentId = comment.getCommentId();
         this.content = comment.getContent();
-        this.userId = comment.getUserId();
+        this.userName = comment.getUserName();
         this.todoId = comment.getTodo().getTodoId();
         this.createdAt = comment.getCreatedAt();
     }

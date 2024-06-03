@@ -36,7 +36,7 @@ public class TodoService {
 
         todo.setTitle(request.getTitle());
         todo.setContent(request.getContent());
-        todo.setUserId(request.getUserId());
+        todo.setUserName(request.getUserName());
         return todoRepository.save(todo);
     }
 

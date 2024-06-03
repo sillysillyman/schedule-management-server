@@ -35,22 +35,22 @@ public class Todo {
 
     @Setter
     @Column(nullable = false)
-    private String userId;
+    private String userName;
 
     @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
-    
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Builder
-    public Todo(String title, String content, String userId, String password) {
+    public Todo(String title, String content, String userName, String password) {
         this.title = title;
         this.content = content;
-        this.userId = userId;
+        this.userName = userName;
         this.password = password;
         this.comments = new LinkedList<>();
         this.createdAt = LocalDateTime.now();
